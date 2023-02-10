@@ -96,7 +96,7 @@ component extends="Controller" output=false {
 	) {
 		for (local.flashType in flashTypes) {
 			if (StructKeyExists(arguments, local.flashType)) {
-				flashInsert("#local.flashType#" = arguments[local.flashType]);
+				flashInsert(local.flashType = arguments[local.flashType]);
 			}
 		}
 		if (!StructIsEmpty(arguments.push)) {
