@@ -20,16 +20,25 @@
  */
 component extends="wheels.Controller" {
 
-	function config() {
-		protectsFromForgery();
-		usesLayout("setLayout");
-	}
-
-	private string function setLayout() {
+	/* FIX adobe-2016 ERROR: "Could not find the included template ../../views/examples/setlayout.cfm. "
+            ** When specifying conditions or a function, pass in 'true' to use the 
+            ** default layout.cfm if none of the conditions are met. 
+            * Need to change function from "private" to "Public", 
+            * so that the IsCustomFunction( "setLayout" ) in 
+            * wheels usesLayout() function will return true
+            */
+	public string function setLayout() {
 		if (isHTMXRequest()) {
 			return false;
-		}
+		} 
 	}
+
+
+	function config() {
+		protectsFromForgery();
+		usesLayout( "setLayout" );
+	}
+
 
 	/**
 	 * Returns true if a request has the htmx header present
