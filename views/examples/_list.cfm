@@ -1,10 +1,25 @@
 <cfoutput>
-	#buttonTag(
-		"hx-get" = URLFor(route = "newExample"),
-		"hx-target" = "##htmx-container",
-		"hx-push-url" = true,
-		content = "New Example"
-	)#
+<p>URLFor(route = "newExample")</p>
+
+<cfset v="#convert_hx_args( 
+			hx_get= 	URLFor(route = "newExample"),
+			hx_target=	"##htmx-container",
+			hx_push_url=true,
+			content= "New Example"
+            )#"
+			 />
+<cfdump var="#v.content#" label="v.content" />
+
+
+    	#buttonTag( argumentCollection= 
+        convert_hx_args( 
+			content= "New Example",
+			hx_get= 	URLFor(route = "newExample"),
+			hx_target=	"##htmx-container",
+			hx_push_url=true
+            )
+			)#
+    
 	<table class="table">
 		<thead>
 			<tr>
@@ -15,15 +30,17 @@
 		</thead>
 		<tbody>
 			<cfloop query="examples">
+          
 				<tr>
 					<td>#examples.id#</td>
 					<td>
-						#linkTo(
-							"hx-get" = URLFor(route = "Example", key = examples.id),
-							"hx-target" = "##htmx-container",
-							"hx-push-url" = true,
-							text = examples.name
-						)#
+						#linkTo(argumentCollection= 
+                        convert_hx_args(                         
+                            hx_get= "#URLFor(route = 'Example', key = examples.id)#",
+                            hx_target= "##htmx-container",
+                            hx_push_url= true,
+                            text= examples.name
+    					) )#
 					</td>
 					<td>#examples.type#</td>
 				</tr>

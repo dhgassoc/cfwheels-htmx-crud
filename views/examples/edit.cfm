@@ -1,18 +1,27 @@
 <cfoutput>
 	#includePartial("/shared/header")#
 	#errorMessagesFor(objectName = "example", class = "bad color")#
-	#startFormTag(
-		"hx-put" = UrlFor(route = "Example", key = example.key()),
-		"hx-target" = "##htmx-container"
-	)#
-		#includePartial("fields")#
-		#buttonTag(
-			"hx-get" = UrlFor(route = "Example", key = example.key()),
-			"hx-target" = "##htmx-container",
-			"hx-push-url" = true,
-			content = "Back"
+    
+    <cfscript>
+ /* HACK:	because codefusion variables/arguments can not have hyphens in name */
+
+ 		
+</cfscript>
+		#startFormTag(argumentCollection=	
+        	convert_hx_args( 
+                hx_put= UrlFor(route = "Example", key = example.key()),
+                hx_target= "##htmx-container"
+            )
 		)#
+		#includePartial("fields")#
+		#buttonTag(argumentCollection=		
+        	convert_hx_args( 
+                hx_get= UrlFor(route = "Example", key = example.key()),
+                hx_target= "##htmx-container",
+                hx_push_url= true,
+                content= "Back")
+        	)#
 		#buttonTag(content = "Save")#
-	#endFormTag()#
-	#includePartial("/shared/footer")#
+		#endFormTag()#
+		#includePartial("/shared/footer")#
 </cfoutput>
